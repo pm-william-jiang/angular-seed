@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        input.ng-invalid.ng-dirty {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="Ctrl">
+<div class="container">
+    <form role="form" name="form" ng-submit="login()" novalidate>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" ng-model="user.email" required/>
+            <span ng-show="form.email.$dirty && form.email.$error.required">Required</span>
+            <span ng-show="form.email.$dirty && form.email.$error.email">not an valid email</span>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" ng-model="user.password" required
+                   ng-minlength="5"
+                   ng-maxlength="10"/>
+            <span ng-show="form.password.$dirty && form.password.$error.required">Required</span>
+            <span ng-show="form.password.$dirty && form.password.$error.minlength">too short</span>
+            <span ng-show="form.password.$dirty && form.password.$error.maxlength">too long</span>
+        </div>
+        <div>
+            <button ng-disabled="form.$invalid">Login</button>
+        </div>
+    </form>
+</div>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script>
+    (function () {
+        'use strict';
+        angular.module('myApp', [])
+                .controller('Ctrl', function ($scope) {
+                    $scope.login = function () {
+                        if ($scope.form.$valid) {
+                            alert('you get it.');
+                        }
+                    };
+                });
+    }());
+</script>
+</body>
+</html>

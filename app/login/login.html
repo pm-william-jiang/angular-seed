@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>PubMatic Jenkins Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        input .ng-invalid.ng-dirty {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="Ctrl">
+<div class="container">
+    <h2 class="text-danger bg-primary" style="padding: 10px;">PubMatic Jenkins Login</h2>
+
+    <form role="form" name="form" novalidate ng-submit="loginValidate()">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" ng-model="user.email" required class="form-control">
+            <span ng-show="form.email.$dirty && form.email.$error.required">Required</span>
+            <span ng-show="form.email.$dirty && form.email.$error.email">Not a valid email</span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"
+                   ng-model="user.password" required class="form-control"
+                   ng-minlength="5" ng-maxlength="10">
+            <span ng-show="form.password.$dirty && form.password.$error.required">Required</span>
+            <span ng-show="form.password.$dirty && form.password.$error.minlength">Minlength is 5</span>
+            <span ng-show="form.password.$dirty && form.password.$error.maxlength">Maxlength is 10</span>
+        </div>
+
+        <button class="btn btn-default" ng-disabled="form.$invalid">Log On</button>
+    </form>
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/underscore/underscore-min.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script>
+    (function () {
+        angular.module("myApp", [])
+                .controller('Ctrl', ["$scope", "$location", function ($scope, $location) {
+                    $scope.loginValidate = function () {
+                        if ($scope.form.$valid) {
+                            console.log('cool, success, continue...');
+                            window.location.href = "http://localhost:9090/";
+                            return false;
+                        }
+                    }
+                }]);
+    }());
+</script>
+</body>
+</html>
